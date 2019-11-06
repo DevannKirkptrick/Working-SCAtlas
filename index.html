@@ -106,6 +106,12 @@
   });
   map.addControl(loadingControl);
     
+new L.Control.LayerTreeControl({
+      layerTree: tree,
+      openByDefault: true
+}).addTo(map);
+
+	  
   </script>
 
   <script type="text/javascript" src="google-doc-url.js"></script>
