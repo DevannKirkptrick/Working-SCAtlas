@@ -4714,9 +4714,3 @@ var tree = [
 	];
 	
 	
-	
-	new L.Control.LayerTreeControl({
-		layerTree: tree,
-		openByDefault: true,
-		layerBuilders: layerBuilders,
-	}).addTo(map);
