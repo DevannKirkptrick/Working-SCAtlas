@@ -159,7 +159,6 @@ $(window).on('load', function() {
         ? 'topleft'
         : getSetting('_pointsLegendPos');
 
-      script
       
       if (getSetting('_pointsLegendPos') !== 'off') {
         //console.log(pointsLegend)
