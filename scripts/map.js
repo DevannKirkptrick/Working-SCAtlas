@@ -159,13 +159,16 @@ $(window).on('load', function() {
         ? 'topleft'
         : getSetting('_pointsLegendPos');
 
-      
+      var pointsLegend = L.control.layers(null, layers, {
+        collapsed: false,
+        position: pos,
+      });
+
       if (getSetting('_pointsLegendPos') !== 'off') {
         //console.log(pointsLegend)
-       new L.Control.LayerTreeControl({
-		      layerTree: tree,
-		      openByDefault: true
-	      }).addTo(map);
+        pointsLegend.addTo(map);
+        pointsLegend._container.id = 'points-legend';
+        pointsLegend._container.className += ' ladder';
       }
     }
 
