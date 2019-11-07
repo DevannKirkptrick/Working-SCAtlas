@@ -66,33 +66,11 @@ $(window).on('load', function() {
    * Given a collection of points, determines the layers based on 'Group'
    * column in the spreadsheet.
    */
-  function determineLayers(points) {
-    var layerNamesFromSpreadsheet = [];
-    var layers = {};
-    for (var i in points) {
-      var pointLayerNameFromSpreadsheet = points[i].Group;
-      if (layerNamesFromSpreadsheet.indexOf(pointLayerNameFromSpreadsheet) === -1) {
-        layerNamesFromSpreadsheet.push(pointLayerNameFromSpreadsheet);
-      }
-    }
-
-    // if none of the points have named layers or if there was only one name, return no layers
-    if (layerNamesFromSpreadsheet.length === 1) {
-      layers = undefined;
-    } else {
-      for (var i in layerNamesFromSpreadsheet) {
-        var layerNameFromSpreadsheet = layerNamesFromSpreadsheet[i];
-        layers[layerNameFromSpreadsheet] = L.layerGroup();
-        layers[layerNameFromSpreadsheet].addTo(map);
-      }
-    }
-    return layers;
-  }
-
+  
   /**
    * Assigns points to appropriate layers and clusters them if needed
    */
-  function mapPoints(points, layers) {
+  function mapPoints(points) {
     var markerArray = [];
     // check that map has loaded before adding points to it?
     for (var i in points) {
@@ -124,9 +102,8 @@ $(window).on('load', function() {
           .bindPopup("<b>" + point['Name'] + '</b><br>' +
           (point['Image'] ? ('<img src="' + point['Image'] + '"><br>') : '') +
           point['Description']);
-
-        if (layers !== undefined && layers.length !== 1) {
-          marker.addTo(layers[point.Group]);
+        {
+          marker.addTo([point.Group]);
         }
 
         markerArray.push(marker);
@@ -137,127 +114,414 @@ $(window).on('load', function() {
     var clusters = (getSetting('_markercluster') === 'on') ? true : false;
 
     // if layers.length === 0, add points to map instead of layer
-    if (layers === undefined || layers.length === 0) {
-      map.addLayer(
-        clusters
-        ? L.markerClusterGroup().addLayer(group).addTo(map)
-        : group
-      );
-    } else {
-      if (clusters) {
+
         // Add multilayer cluster support
         multilayerClusterSupport = L.markerClusterGroup.layerSupport();
         multilayerClusterSupport.addTo(map);
 
-        for (i in layers) {
-          multilayerClusterSupport.checkIn(layers[i]);
-          layers[i].addTo(map);
-        }
-      }
+        multilayerClusterSupport.checkIn([abbey10ad, 
+abbey10bc, 
+abbey11ad, 
+abbey12ad, 
+abbey13ad, 
+abbey13bc, 
+abbey14ad, 
+abbey15ad, 
+abbey16ad, 
+abbey1ad, 
+abbey2ad, 
+abbey2bc, 
+abbey31bc, 
+abbey33bc, 
+abbey37bc, 
+abbey3ad, 
+abbey4ad, 
+abbey5ad, 
+abbey5bc, 
+abbey6ad, 
+abbey6bc, 
+abbey7ad, 
+abbey8ad, 
+abbey8bc, 
+abbey9ad, 
+academy10ad, 
+academy10bc, 
+academy11ad, 
+academy12ad, 
+academy13ad, 
+academy13bc, 
+academy14ad, 
+academy15ad, 
+academy16ad, 
+academy1ad, 
+academy2ad, 
+academy2bc, 
+academy31bc, 
+academy33bc, 
+academy37bc, 
+academy3ad, 
+academy4ad, 
+academy5ad, 
+academy5bc, 
+academy6ad, 
+academy6bc, 
+academy7ad, 
+academy8ad, 
+academy8bc, 
+academy9ad, 
+amphitheatre10ad, 
+amphitheatre10bc, 
+amphitheatre11ad, 
+amphitheatre12ad, 
+amphitheatre13ad, 
+amphitheatre13bc, 
+amphitheatre14ad, 
+amphitheatre15ad, 
+amphitheatre16ad, 
+amphitheatre1ad, 
+amphitheatre2ad, 
+amphitheatre2bc, 
+amphitheatre31bc, 
+amphitheatre33bc, 
+amphitheatre37bc, 
+amphitheatre3ad, 
+amphitheatre4ad, 
+amphitheatre5ad, 
+amphitheatre5bc, 
+amphitheatre6ad, 
+amphitheatre6bc, 
+amphitheatre7ad, 
+amphitheatre8ad, 
+amphitheatre8bc, 
+amphitheatre9ad, 
+bridge10ad, 
+bridge10bc, 
+bridge11ad, 
+bridge12ad, 
+bridge13ad, 
+bridge13bc, 
+bridge14ad, 
+bridge15ad, 
+bridge16ad, 
+bridge1ad, 
+bridge2ad, 
+bridge2bc, 
+bridge31bc, 
+bridge33bc, 
+bridge37bc, 
+bridge3ad, 
+bridge4ad, 
+bridge5ad, 
+bridge5bc, 
+bridge6ad, 
+bridge6bc, 
+bridge7ad, 
+bridge8ad, 
+bridge8bc, 
+bridge9ad, 
+castle10ad, 
+castle10bc, 
+castle11ad, 
+castle12ad, 
+castle13ad, 
+castle13bc, 
+castle14ad, 
+castle15ad, 
+castle16ad, 
+castle1ad, 
+castle2ad, 
+castle2bc, 
+castle31bc, 
+castle33bc, 
+castle37bc, 
+castle3ad, 
+castle4ad, 
+castle5ad, 
+castle5bc, 
+castle6ad, 
+castle6bc, 
+castle7ad, 
+castle8ad, 
+castle8bc, 
+castle9ad, 
+church10ad, 
+church10bc, 
+church11ad, 
+church12ad, 
+church13ad, 
+church13bc, 
+church14ad, 
+church15ad, 
+church16ad, 
+church1ad, 
+church2ad, 
+church2bc, 
+church31bc, 
+church33bc, 
+church37bc, 
+church3ad, 
+church4ad, 
+church5ad, 
+church5bc, 
+church6ad, 
+church6bc, 
+church7ad, 
+church8ad, 
+church8bc, 
+church9ad, 
+fort10ad, 
+fort10bc, 
+fort11ad, 
+fort12ad, 
+fort13ad, 
+fort13bc, 
+fort14ad, 
+fort15ad, 
+fort16ad, 
+fort1ad, 
+fort2ad, 
+fort2bc, 
+fort31bc, 
+fort33bc, 
+fort37bc, 
+fort3ad, 
+fort4ad, 
+fort5ad, 
+fort5bc, 
+fort6ad, 
+fort6bc, 
+fort7ad, 
+fort8ad, 
+fort8bc, 
+fort9ad, 
+gate10ad, 
+gate10bc, 
+gate11ad, 
+gate12ad, 
+gate13ad, 
+gate13bc, 
+gate14ad, 
+gate15ad, 
+gate16ad, 
+gate1ad, 
+gate2ad, 
+gate2bc, 
+gate31bc, 
+gate33bc, 
+gate37bc, 
+gate3ad, 
+gate4ad, 
+gate5ad, 
+gate5bc, 
+gate6ad, 
+gate6bc, 
+gate7ad, 
+gate8ad, 
+gate8bc, 
+gate9ad, 
+monastery10ad, 
+monastery10bc, 
+monastery11ad, 
+monastery12ad, 
+monastery13ad, 
+monastery13bc, 
+monastery14ad, 
+monastery15ad, 
+monastery16ad, 
+monastery1ad, 
+monastery2ad, 
+monastery2bc, 
+monastery31bc, 
+monastery33bc, 
+monastery37bc, 
+monastery3ad, 
+monastery4ad, 
+monastery5ad, 
+monastery5bc, 
+monastery6ad, 
+monastery6bc, 
+monastery7ad, 
+monastery8ad, 
+monastery8bc, 
+monastery9ad, 
+mosque10ad, 
+mosque10bc, 
+mosque11ad, 
+mosque12ad, 
+mosque13ad, 
+mosque13bc, 
+mosque14ad, 
+mosque15ad, 
+mosque16ad, 
+mosque1ad, 
+mosque2ad, 
+mosque2bc, 
+mosque31bc, 
+mosque33bc, 
+mosque37bc, 
+mosque3ad, 
+mosque4ad, 
+mosque5ad, 
+mosque5bc, 
+mosque6ad, 
+mosque6bc, 
+mosque7ad, 
+mosque8ad, 
+mosque8bc, 
+mosque9ad, 
+palace10ad, 
+palace10bc, 
+palace11ad, 
+palace12ad, 
+palace13ad, 
+palace13bc, 
+palace14ad, 
+palace15ad, 
+palace16ad, 
+palace1ad, 
+palace2ad, 
+palace2bc, 
+palace31bc, 
+palace33bc, 
+palace37bc, 
+palace3ad, 
+palace4ad, 
+palace5ad, 
+palace5bc, 
+palace6ad, 
+palace6bc, 
+palace7ad, 
+palace8ad, 
+palace8bc, 
+palace9ad, 
+shrine10ad, 
+shrine10bc, 
+shrine11ad, 
+shrine12ad, 
+shrine13ad, 
+shrine13bc, 
+shrine14ad, 
+shrine15ad, 
+shrine16ad, 
+shrine1ad, 
+shrine2ad, 
+shrine2bc, 
+shrine31bc, 
+shrine33bc, 
+shrine37bc, 
+shrine3ad, 
+shrine4ad, 
+shrine5ad, 
+shrine5bc, 
+shrine6ad, 
+shrine6bc, 
+shrine7ad, 
+shrine8ad, 
+shrine8bc, 
+shrine9ad, 
+temple10ad, 
+temple10bc, 
+temple11ad, 
+temple12ad, 
+temple13ad, 
+temple13bc, 
+temple14ad, 
+temple15ad, 
+temple16ad, 
+temple1ad, 
+temple2ad, 
+temple2bc, 
+temple31bc, 
+temple33bc, 
+temple37bc, 
+temple3ad, 
+temple4ad, 
+temple5ad, 
+temple5bc, 
+temple6ad, 
+temple6bc, 
+temple7ad, 
+temple8ad, 
+temple8bc, 
+temple9ad, 
+theatre10ad, 
+theatre10bc, 
+theatre11ad, 
+theatre12ad, 
+theatre13ad, 
+theatre13bc, 
+theatre14ad, 
+theatre15ad, 
+theatre16ad, 
+theatre1ad, 
+theatre2ad, 
+theatre2bc, 
+theatre31bc, 
+theatre33bc, 
+theatre37bc, 
+theatre3ad, 
+theatre4ad, 
+theatre5ad, 
+theatre5bc, 
+theatre6ad, 
+theatre6bc, 
+theatre7ad, 
+theatre8ad, 
+theatre8bc, 
+theatre9ad, 
+tomb10ad, 
+tomb10bc, 
+tomb11ad, 
+tomb12ad, 
+tomb13ad, 
+tomb13bc, 
+tomb14ad, 
+tomb15ad, 
+tomb16ad, 
+tomb1ad, 
+tomb2ad, 
+tomb2bc, 
+tomb31bc, 
+tomb33bc, 
+tomb37bc, 
+tomb3ad, 
+tomb4ad, 
+tomb5ad, 
+tomb5bc, 
+tomb6ad, 
+tomb6bc, 
+tomb7ad, 
+tomb8ad, 
+tomb8bc, 
+tomb9ad, 
+village10ad, 
+village10bc, 
+village11ad, 
+village12ad, 
+village13ad, 
+village13bc, 
+village14ad, 
+village15ad, 
+village16ad, 
+village1ad, 
+village2ad, 
+village2bc, 
+village31bc, 
+village33bc, 
+village37bc, 
+village3ad, 
+village4ad, 
+village5ad, 
+village5bc, 
+village6ad, 
+village6bc, 
+village7ad, 
+village8ad, 
+village8bc, 
+village9ad]);
 
-      var pos = (getSetting('_pointsLegendPos') == 'off')
-        ? 'topleft'
-        : getSetting('_pointsLegendPos');
 
-      var pointsLegend = L.control.layers(null, layers, {
-        collapsed: false,
-        position: pos,
-      });
-
-      if (getSetting('_pointsLegendPos') !== 'off') {
-        //console.log(pointsLegend)
-        pointsLegend.addTo(map);
-        pointsLegend._container.id = 'points-legend';
-        pointsLegend._container.className += ' ladder';
-      }
-    }
-
-    $('#points-legend').prepend('<h6 class="pointer">' + getSetting('_pointsLegendTitle') + '</h6>');
-    if (getSetting('_pointsLegendIcon') != '') {
-      $('#points-legend h6').prepend('<span class="legend-icon"><i class="fa '
-        + getSetting('_pointsLegendIcon') + '"></i></span>');
-    }
-
-    var displayTable = getSetting('_displayTable') == 'on' ? true : false;
-
-    // Display table with active points if specified
-    var columns = getSetting('_tableColumns').split(',')
-                  .map(Function.prototype.call, String.prototype.trim);
-
-    if (displayTable && columns.length > 1) {
-      tableHeight = trySetting('_tableHeight', 40);
-      if (tableHeight < 10 || tableHeight > 90) {tableHeight = 40;}
-      $('#map').css('height', (100 - tableHeight) + 'vh');
-      map.invalidateSize();
-
-      // Set background (and text) color of the table header
-      var colors = getSetting('_tableHeaderColor').split(',');
-      if (colors[0] != '') {
-        $('table.display').css('background-color', colors[0]);
-        if (colors.length >= 2) {
-          $('table.display').css('color', colors[1]);
-        }
-      }
-
-      // Update table every time the map is moved/zoomed or point layers are toggled
-      map.on('moveend', updateTable);
-      map.on('layeradd', updateTable);
-      map.on('layerremove', updateTable);
-
-      // Clear table data and add only visible markers to it
-      function updateTable() {
-        var pointsVisible = [];
-        for (i in points) {
-          if (map.hasLayer(layers[points[i].Group]) &&
-              map.getBounds().contains(L.latLng(points[i].Latitude, points[i].Longitude))) {
-            pointsVisible.push(points[i]);
-          }
-        }
-
-        tableData = pointsToTableData(pointsVisible);
-
-        table.clear();
-        table.rows.add(tableData);
-        table.draw();
-      }
-
-      // Convert Leaflet marker objects into DataTable array
-      function pointsToTableData(ms) {
-        var data = [];
-        for (i in ms) {
-          var a = [];
-          for (j in columns) {
-            a.push(ms[i][columns[j]]);
-          }
-          data.push(a);
-        }
-        return data;
-      }
-
-      // Transform columns array into array of title objects
-      function generateColumnsArray() {
-        var c = [];
-        for (i in columns) {
-          c.push({title: columns[i]});
-        }
-        return c;
-      }
-
-      // Initialize DataTable
-      var table = $('#maptable').DataTable({
-        paging: false,
-        scrollCollapse: true,
-        scrollY: 'calc(' + tableHeight + 'vh - 40px)',
-        info: false,
-        searching: false,
-        columns: generateColumnsArray(),
-      });
-    }
-
-    completePoints = true;
-    return group;
-  }
-
+ 
   var polygon = 0; // current active polygon
   var layer = 0; // number representing current layer among layers in legend
 
@@ -611,15 +875,7 @@ $(window).on('load', function() {
     addBaseMap();
 
     // Add point markers to the map
-    var points = mapData.sheets(constants.pointsSheetName);
-    var layers;
-    var group = '';
-    if (points && points.elements.length > 0) {
-      layers = determineLayers(points.elements);
-      group = mapPoints(points.elements, layers);
-    } else {
-      completePoints = true;
-    }
+
 
     centerAndZoomMap(group);
 
