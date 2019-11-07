@@ -801,12 +801,8 @@ var village8bc = L.layerGroup();
 var village9ad = L.layerGroup();
 
 
-var overLayers = [
+var Layers = [
 	[
-		{
-			name: "title",
-			layer: layername
-		},
 		{
 			group: "BC 37th CE",
 			collapsed: true,
@@ -2563,7 +2559,7 @@ var overLayers = [
 
 
 
-var panelLayers = new L.Control.PanelLayers(null, overLayers, {
+var panelLayers = new L.Control.PanelLayers(null, Layers, {
 	collapsibleGroups: true,
 	collapsed: false
 });
