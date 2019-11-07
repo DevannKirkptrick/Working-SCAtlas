@@ -66,7 +66,7 @@ $(window).on('load', function() {
    * Given a collection of points, determines the layers based on 'Group'
    * column in the spreadsheet.
    */
-  function determineLayers(points) {
+  function determineLayers(Testlayers) {
     var layerNamesFromSpreadsheet = [];
     var layers = {};
     for (var i in Testlayers) {
@@ -155,9 +155,6 @@ $(window).on('load', function() {
         }
       }
 
-      var pos = (getSetting('_pointsLegendPos') == 'off')
-        ? 'topleft'
-        : getSetting('_pointsLegendPos');
 
       var overLayers = [
 	[
@@ -1921,13 +1918,8 @@ $(window).on('load', function() {
       var pointsLegend = L.Control.PanelLayers(null, overLayers, {
 	collapsibleGroups: true,
 	collapsed: false
-});
-      
-
-      if (getSetting('_pointsLegendPos') !== 'off') {
-        //console.log(pointsLegend)
+});   
         pointsLegend.addTo(map);
-      }
     }
 
 
