@@ -4,7 +4,7 @@ Customize Leaflet maps with a linked Google Sheets template and GeoJSON data on 
 
 
 ## Live links (replace with your own)
-- Leaflet Map https://devannkirkptrick.github.io/leaflet-maps-with-google-sheets/
+- Leaflet Map https://devannkirkptrick.github.io/Working-SCAtlas/
 - Google Sheets template https://docs.google.com/spreadsheets/d/17hCM35S2NNP7_EeOAR0l1Y1WtNonBhRhlCQJWNExibE/edit#gid=0
 
 ## Create your own
